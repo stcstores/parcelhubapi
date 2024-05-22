@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "parcelhubapi"
+version = "0.0.1"
+description = "Parcelhub API integration"
+authors = ["Luke Shiner <luke@lukeshiner.com>"]
+license = "MIT"
+readme = "README.rst"
+
+[tool.coverage.run]
+branch = true
+omit = ["tests/*",]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = ">=2.31.0"
+lxml = ">=5.1.0"
+toml = ">=0.10.2"
+
+[tool.poetry.group.dev.dependencies]
+black = ">=23.10.0"
+flake8 = ">=6.1.0"
+flake8-docstrings = ">=1.7.0"
+isort = ">=5.12.0"
+pytest = ">=7.4.2"
+pytest-cov = ">=4.1.0"
+
+[build-system]
+requires = ["poetry>=1.1.6"]
+build-backend = "poetry.masonry.api"

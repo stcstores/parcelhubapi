@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Shipment xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://api.parcelhub.net/schemas/api/parcelhub-api-v0.4.xsd">
+  <Account>ACCOUNT_ID</Account>
+  <ServiceInfo>
+    <ServiceId>38001</ServiceId>
+    <ServiceCustomerUID>50481</ServiceCustomerUID>
+    <ServiceProviderId>50</ServiceProviderId>
+  </ServiceInfo>
+  <ParcelhubShipmentId>0</ParcelhubShipmentId>
+  <CollectionDetails>
+    <CollectionDate>2024-03-29</CollectionDate>
+    <CollectionReadyTime>12:00:00</CollectionReadyTime>
+    <LocationCloseTime>17:00:00</LocationCloseTime>
+  </CollectionDetails>
+  <CollectionAddress>
+    <ContactName>TEST001</ContactName>
+    <CompanyName>Parcelhub</CompanyName>
+    <Phone>1</Phone>
+    <Address1>unit a</Address1>
+    <Address2>little tennis street</Address2>
+    <City>nottingham</City>
+    <Area>NOTTINGHAMSHIRE</Area>
+    <Postcode>ng2 4eu</Postcode>
+    <Country>GB</Country>
+    <AddressType>Residential</AddressType>
+    <Email>test@test.test</Email>
+  </CollectionAddress>
+  <DeliveryAddress>
+    <ContactName>TEST</ContactName>
+    <CompanyName>TEST</CompanyName>
+    <Phone>0000000000</Phone>
+    <Address1>TEST</Address1>
+    <City>BEVERLY HILLS</City>
+    <Area>CALIFORNIA</Area>
+    <Postcode>90210</Postcode>
+    <Country>US</Country>
+    <AddressType>Residential</AddressType>
+    <Email>test@test.test</Email>
+  </DeliveryAddress>
+  <Reference1>TEST</Reference1>
+  <ContentsDescription>Goods</ContentsDescription>
+  <Packages>
+    <Package>
+      <PackageType>Parcel</PackageType>
+      <Dimensions>
+        <Length>20</Length>
+        <Width>20</Width>
+        <Height>20</Height>
+      </Dimensions>
+      <Weight>2</Weight>
+      <Value Currency="GBP">10</Value>
+      <Contents>Goods</Contents>
+      <PackageCustomsDeclaration>
+        <Weight>2 kg</Weight>
+        <Value Currency="GBP">10</Value>
+      </PackageCustomsDeclaration>
+      <ItemLevelDeclarations>
+        <ItemLevelDeclaration>
+          <ProductSKU>55198</ProductSKU>
+          <ProductDescription>ASDASDAS</ProductDescription>
+          <ProductType>ASDASD</ProductType>
+          <ProductValue>10</ProductValue>
+          <ProductQuantity>1</ProductQuantity>
+          <ProductWeight>2</ProductWeight>
+          <ProductCountryOfOrigin>GB</ProductCountryOfOrigin>
+          <ProductHarmonisedCode>8498409</ProductHarmonisedCode>
+        </ItemLevelDeclaration>
+      </ItemLevelDeclarations>
+    </Package>
+  </Packages>
+  <Enhancements/>
+  <ModifiedTime>0001-01-01T00:00:00</ModifiedTime>
+  <CurrencyCode>GBP</CurrencyCode>
+  <CustomsDeclarationInfo>
+    <TermsOfTrade>DutiesAndTaxesUnpaid</TermsOfTrade>
+    <PostalCharges>0</PostalCharges>
+    <CategoryOfItem>Sold</CategoryOfItem>
+    <CategoryOfItemExplanation>ASDAASD</CategoryOfItemExplanation>
+    <CarriageValue>10</CarriageValue>
+    <InsuranceValue>10</InsuranceValue>
+    <OtherValue>10</OtherValue>
+  </CustomsDeclarationInfo>
+  <Deleted>false</Deleted>
+  <HasBeenManifested>false</HasBeenManifested>
+  <ShipmentTags/>
+  <Department></Department>
+</Shipment>
