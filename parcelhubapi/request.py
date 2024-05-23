@@ -3,25 +3,19 @@
 import requests
 from lxml import etree
 
-GET = "GET"
-POST = "POST"
-
 
 class BaseParcelhubApiRequest:
     """Base class for Parcelhhub requests."""
 
     URL = ""
 
+    GET = "GET"
+    POST = "POST"
+
     METHOD = GET
 
-    NSMAP = {
-        "xsi": "http://www.w3.org/2001/XMLSchema-instance",
-        "xsd": "http://www.w3.org/2001/XMLSchema",
-    }
-
-    def __init__(self, session, **kwargs):
+    def __init__(self, session):
         """Set request session."""
-        self.kwargs = kwargs
         self.session = session
 
     def url(self, *args, **kwargs):
@@ -59,20 +53,25 @@ class BaseParcelhubApiRequest:
             data=self.data(*args, **kwargs),
         )
         response.raise_for_status()
-        return self.parse_response(response)
+        return self.parse_response(response, *args, **kwargs)
 
 
 class GetTokenRequest(BaseParcelhubApiRequest):
     """Request for getting a refresh token and access token."""
 
     URL = "1.0/TokenV2"
-    METHOD = POST
+    METHOD = BaseParcelhubApiRequest.POST
 
     GRANT_TYPE = "grant_type"
     USERNAME = "username"
     PASSWORD = "password"
 
     BARER = "bearer"
+
+    NSMAP = {
+        "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "xsd": "http://www.w3.org/2001/XMLSchema",
+    }
 
     def headers(self, *args, **kwargs):
         """Return request headers."""
@@ -98,22 +97,11 @@ class GetTokenRequest(BaseParcelhubApiRequest):
         return access_token, refresh_token
 
 
-class DraftShipmentRequest(BaseParcelhubApiRequest):
-    """Request for creating draft shipments."""
-
-    URL = "1.0/DraftShipment"
-    METHOD = POST
-
-    def params(self, *args, **kwargs):
-        """Return request parameters."""
-        return {"AccountId": self.session.account_id}
-
-
 class GetShipmentsRequest(BaseParcelhubApiRequest):
     """Request for retrieving active shipments."""
 
     URL = "1.0/Shipment"
-    METHOD = GET
+    METHOD = BaseParcelhubApiRequest.GET
 
     def params(self, *args, **kwargs):
         """Return request parameters."""
@@ -130,7 +118,7 @@ class CreateShipmentRequest(BaseParcelhubApiRequest):
     """Request for creating shipments."""
 
     URL = "1.0/Shipment"
-    METHOD = POST
+    METHOD = BaseParcelhubApiRequest.POST
 
     def params(self, *args, **kwargs):
         """Return request parameters."""
