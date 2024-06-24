@@ -1,5 +1,7 @@
 """Parcelhub API requests."""
 
+import sys
+
 import requests
 from lxml import etree
 
@@ -52,8 +54,16 @@ class BaseParcelhubApiRequest:
             params=self.params(*args, **kwargs),
             data=self.data(*args, **kwargs),
         )
-        response.raise_for_status()
+        self.check_response(response)
         return self.parse_response(response, *args, **kwargs)
+
+    def check_response(self, response):
+        """Check the response status code."""
+        try:
+            response.raise_for_status()
+        except Exception:
+            print(response.text, file=sys.stderr)
+            raise
 
 
 class GetTokenRequest(BaseParcelhubApiRequest):

@@ -65,6 +65,7 @@ def test_call_method(mock_requests, request_args, request_kwargs, request_obj):
     request_obj.headers = mock.Mock()
     request_obj.params = mock.Mock()
     request_obj.data = mock.Mock()
+    request_obj.check_response = mock.Mock()
     request_obj.parse_response = mock.Mock()
     value = request_obj.call(*request_args, **request_kwargs)
     request_obj.url.assert_called_once_with(*request_args, **request_kwargs)
@@ -78,8 +79,24 @@ def test_call_method(mock_requests, request_args, request_kwargs, request_obj):
         params=request_obj.params.return_value,
         data=request_obj.data.return_value,
     )
-    mock_requests.request.return_value.raise_for_status.assert_called_once_with()
+    request_obj.check_response.assert_called_once_with(
+        mock_requests.request.return_value
+    )
     request_obj.parse_response.assert_called_once_with(
         mock_requests.request.return_value, *request_args, **request_kwargs
     )
     assert value == request_obj.parse_response.return_value
+
+
+def test_check_response_method(request_obj):
+    response = mock.Mock()
+    request_obj.check_response(response)
+    response.raise_for_status.assert_called_once_with()
+
+
+def test_check_response_method_handles_error(request_obj):
+    response = mock.Mock()
+    response.raise_for_status.side_effect = Exception
+    with pytest.raises(Exception):
+        request_obj.check_response(response)
+    response.raise_for_status.assert_called_once_with()
