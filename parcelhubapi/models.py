@@ -245,12 +245,12 @@ class ShipmentRequest:
         """
         self.customs_declaration = self._CustomsDeclaration(
             terms=terms,
-            postal_charges=postal_charges,
-            category=category,
-            category_explanation=category_explanation,
-            value=value,
-            insurance_value=insurance_value,
-            other_value=other_value,
+            postal_charges=str(postal_charges),
+            category=str(category),
+            category_explanation=str(category_explanation),
+            value=str(value),
+            insurance_value=str(insurance_value),
+            other_value=str(other_value),
         )
         return self.customs_declaration
 
@@ -308,9 +308,9 @@ class ShipmentRequest:
 
         def to_dict(self):
             return {
-                self.SERVICE_ID: self.service_id,
-                self.CUSTOMER_ID: self.customer_id,
-                self.PROVIDER_ID: self.provider_id,
+                self.SERVICE_ID: str(self.service_id),
+                self.CUSTOMER_ID: str(self.customer_id),
+                self.PROVIDER_ID: str(self.provider_id),
             }
 
     class _CollectionDetails(BaseXMLModel):
@@ -572,10 +572,10 @@ class ShipmentRequest:
         def to_dict(self):
             return {
                 self.TERMS: self.terms,
-                self.POSTAL_CHARGES: self.postal_charges,
+                self.POSTAL_CHARGES: str(self.postal_charges),
                 self.CATEGORY: self.category,
                 self.CATEGORY_EXPLANATION: self.category_explanation,
-                self.VALUE: self.value,
-                self.INSURANCE_VALUE: self.insurance_value,
-                self.OTHER_VALUE: self.other_value,
+                self.VALUE: str(self.value),
+                self.INSURANCE_VALUE: str(self.insurance_value),
+                self.OTHER_VALUE: str(self.other_value),
             }
