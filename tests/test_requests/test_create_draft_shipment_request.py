@@ -1,7 +1,10 @@
+from pathlib import Path
 from unittest import mock
 
 import pytest
 
+from parcelhubapi.exceptions import ResponseParsingError
+from parcelhubapi.models import CreateShipmentResponse
 from parcelhubapi.request import BaseParcelhubApiRequest, CreateDraftShipmentRequest
 
 
@@ -13,6 +16,12 @@ def request_obj(mock_session):
 @pytest.fixture
 def shipment_request_data():
     return mock.Mock()
+
+
+@pytest.fixture
+def response_text():
+    with open(Path(__file__).parent / "shipment_response.xml") as f:
+        return f.read()
 
 
 def test_url_attribute(request_obj):
@@ -62,9 +71,21 @@ def test_data_method(mock_etree, request_obj, shipment_request_data):
     assert value == mock_etree.tostring.return_value
 
 
-def test_parse_response_method(request_obj):
-    response = mock.Mock()
-    assert request_obj.parse_response(response) == response.text
+def test_parse_response_method(request_obj, response_text):
+    response = mock.Mock(text=response_text)
+    value = request_obj.parse_response(response)
+    assert isinstance(value, CreateShipmentResponse)
+    assert value.shipment_id == "14074848347197107"
+    assert value.courier_tracking_number == "1ZC7V9230433575084"
+    assert value.parcelhub_tracking_number == "WHL0P050000036532"
+
+
+def test_parse_response_method_with_error(request_obj, response_text):
+    response = mock.Mock(text="Some Invalid Text")
+    with pytest.raises(
+        ResponseParsingError, match='Error parsing response: "Some Invalid Text".'
+    ):
+        request_obj.parse_response(response)
 
 
 @mock.patch("parcelhubapi.request.requests")

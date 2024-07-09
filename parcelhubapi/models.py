@@ -3,6 +3,16 @@
 from lxml import etree
 
 
+class CreateShipmentResponse:
+    """Model for returned information about created shipments."""
+
+    def __init__(self, shipment_id, courier_tracking_number, parcelhub_tracking_number):
+        """Information about a created shipment."""
+        self.shipment_id = shipment_id
+        self.courier_tracking_number = courier_tracking_number
+        self.parcelhub_tracking_number = parcelhub_tracking_number
+
+
 class BaseXMLModel:
     """Base class for creating XML objects."""
 

@@ -5,6 +5,9 @@ import sys
 import requests
 from lxml import etree
 
+from .exceptions import ResponseParsingError
+from .models import CreateShipmentResponse
+
 
 class BaseParcelhubApiRequest:
     """Base class for Parcelhhub requests."""
@@ -145,6 +148,27 @@ class CreateShipmentRequest(BaseParcelhubApiRequest):
             shipment_request.as_xml(),
             encoding="utf-8",
             xml_declaration=True,
+        )
+
+    def parse_response(self, response, *args, **kwargs):
+        """Return the created shipment's shipment ID."""
+        ns = "{http://api.parcelhub.net/schemas/api/parcelhub-api-v0.4.xsd}"
+        try:
+            root = etree.XML(response.text[38:])
+            shipment_id = root.find(f"{ns}ParcelhubShipmentId").text
+            shipping_info = root.find(f"{ns}ShippingInfo")
+            courier_tracking_number = shipping_info.find(
+                f"{ns}CourierTrackingNumber"
+            ).text
+            parcelhub_tracking_number = shipping_info.find(
+                f"{ns}ParcelhubTrackingNumber"
+            ).text
+        except Exception:
+            raise ResponseParsingError(response.text)
+        return CreateShipmentResponse(
+            shipment_id=shipment_id,
+            courier_tracking_number=courier_tracking_number,
+            parcelhub_tracking_number=parcelhub_tracking_number,
         )
 
 
