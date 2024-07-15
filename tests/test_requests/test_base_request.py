@@ -1,7 +1,10 @@
+import re
 from unittest import mock
 
 import pytest
+from requests import Response
 
+from parcelhubapi import exceptions
 from parcelhubapi.request import BaseParcelhubApiRequest
 
 
@@ -100,3 +103,14 @@ def test_check_response_method_handles_error(request_obj):
     with pytest.raises(Exception):
         request_obj.check_response(response)
     response.raise_for_status.assert_called_once_with()
+
+
+def test_check_response_method_handles_raise_for_status(request_obj):
+    response = Response()
+    response._content = b"Invalid Response"
+    response.status_code = 500
+    with pytest.raises(
+        exceptions.ResponseStatusError,
+        match=re.escape('Error response (500): "Invalid Response".'),
+    ):
+        request_obj.check_response(response)

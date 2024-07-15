@@ -5,7 +5,7 @@ import sys
 import requests
 from lxml import etree
 
-from .exceptions import ResponseParsingError
+from . import exceptions
 from .models import CreateShipmentResponse
 
 
@@ -65,6 +65,7 @@ class BaseParcelhubApiRequest:
         try:
             response.raise_for_status()
         except Exception:
+            raise exceptions.ResponseStatusError(response)
             print(response.text, file=sys.stderr)
             raise
 
@@ -164,7 +165,7 @@ class CreateShipmentRequest(BaseParcelhubApiRequest):
                 f"{ns}ParcelhubTrackingNumber"
             ).text
         except Exception:
-            raise ResponseParsingError(response.text)
+            raise exceptions.ResponseParsingError(response.text)
         return CreateShipmentResponse(
             shipment_id=shipment_id,
             courier_tracking_number=courier_tracking_number,
