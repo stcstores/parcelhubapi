@@ -54,7 +54,7 @@ def test_headers_method(access_token, request_obj):
 def test_params_method(request_obj, account_id):
     assert request_obj.params() == {
         "AccountId": account_id,
-        "RequestedLabelFormat": "PNG",
+        "RequestedLabelFormat": "ZPL",
         "RequestedLabelSize": 6,
     }
 

@@ -138,7 +138,7 @@ class CreateShipmentRequest(BaseParcelhubApiRequest):
         """Return request parameters."""
         return {
             "AccountId": self.session.account_id,
-            "RequestedLabelFormat": "PNG",
+            "RequestedLabelFormat": "ZPL",
             "RequestedLabelSize": 6,
         }
 
