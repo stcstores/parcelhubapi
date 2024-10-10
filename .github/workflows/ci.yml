@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         # prettier-ignore
-        python-version: ["3.12"]
+        python-version: ["3.13"]
 
     steps:
       - name: Install Libraries
