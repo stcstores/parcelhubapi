@@ -111,6 +111,6 @@ def test_check_response_method_handles_raise_for_status(request_obj):
     response.status_code = 500
     with pytest.raises(
         exceptions.ResponseStatusError,
-        match=re.escape('Error response (500): "Invalid Response".'),
+        match=re.escape("Error response (500): 'Invalid Response'."),
     ):
         request_obj.check_response(response)

@@ -14,7 +14,7 @@ class ResponseParsingError(ValueError):
 
     def __init__(self, response_text, *args, **kwargs):
         """Exception raised when there is an error parsing an API response."""
-        super().__init__(f'Error parsing response: "{response_text}".')
+        super().__init__(f"Error parsing response: {response_text!r}.")
 
 
 class ResponseStatusError(ValueError):
@@ -22,4 +22,4 @@ class ResponseStatusError(ValueError):
 
     def __init__(self, response, *args, **kwargs):
         """Exception raised when a response has an error status."""
-        super().__init__(f'Error response ({response.status_code}): "{response.text}".')
+        super().__init__(f"Error response ({response.status_code}): {response.text!r}.")

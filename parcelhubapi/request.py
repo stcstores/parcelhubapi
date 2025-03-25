@@ -1,7 +1,5 @@
 """Parcelhub API requests."""
 
-import sys
-
 import requests
 from lxml import etree
 
@@ -64,10 +62,8 @@ class BaseParcelhubApiRequest:
         """Check the response status code."""
         try:
             response.raise_for_status()
-        except Exception:
-            raise exceptions.ResponseStatusError(response)
-            print(response.text, file=sys.stderr)
-            raise
+        except Exception as e:
+            raise exceptions.ResponseStatusError(response) from e
 
 
 class GetTokenRequest(BaseParcelhubApiRequest):
@@ -164,8 +160,8 @@ class CreateShipmentRequest(BaseParcelhubApiRequest):
             parcelhub_tracking_number = shipping_info.find(
                 f"{ns}ParcelhubTrackingNumber"
             ).text
-        except Exception:
-            raise exceptions.ResponseParsingError(response.text)
+        except Exception as e:
+            raise exceptions.ResponseParsingError(response.text) from e
         return CreateShipmentResponse(
             shipment_id=shipment_id,
             courier_tracking_number=courier_tracking_number,

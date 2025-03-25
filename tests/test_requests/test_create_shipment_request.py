@@ -83,7 +83,7 @@ def test_parse_response_method(request_obj, response_text):
 def test_parse_response_method_with_error(request_obj, response_text):
     response = mock.Mock(text="Some Invalid Text")
     with pytest.raises(
-        ResponseParsingError, match='Error parsing response: "Some Invalid Text".'
+        ResponseParsingError, match="Error parsing response: 'Some Invalid Text'."
     ):
         request_obj.parse_response(response)
 
